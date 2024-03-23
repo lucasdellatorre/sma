@@ -10,6 +10,7 @@ class Queue:
         self.global_time = 0
         self.status = 0
         self.losses = 0
+        self.states = [0] * (capacity + 1)
 
     def arrival(self, event):
         self.__update_global_time(event)
@@ -28,4 +29,5 @@ class Queue:
             self.scheduler.add(Event(EventType.EXIT, self.global_time), self.service_interval)
 
     def __update_global_time(self, event):
+        self.states[self.status] = self.states[self.status] + event.time - self.global_time 
         self.global_time = event.time

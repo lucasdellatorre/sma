@@ -2,6 +2,7 @@ from interval import Interval
 from queue_1 import Queue
 from scheduler import Scheduler
 from simulation import Simulation
+from stats import Stats
 
 arrival_time = 1
 capacity = 4 
@@ -16,3 +17,7 @@ queue = Queue(capacity=capacity, servers=servers, scheduler=scheduler,arrival_in
 sim = Simulation(arrival=arrival_time, queue=queue, scheduler=scheduler, random_numbers=random_numbers)
 
 sim.run()
+
+stats = Stats(queue)
+
+stats.show_prob_distribution()
