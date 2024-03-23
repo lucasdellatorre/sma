@@ -21,3 +21,7 @@ sim.run()
 stats = Stats(queue)
 
 stats.show_prob_distribution()
+
+stats.show_losses()
+
+stats.show_global_time()

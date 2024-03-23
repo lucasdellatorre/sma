@@ -15,8 +15,14 @@ class Stats:
     def show_prob_distribution(self):
         distribution = self.calc_prob_distribution()
 
-        print("Estado\tTempo\tProbabilidade")
+        print("State\tTime\tProbability")
 
         for row in distribution:
             print(f"{row[0]}\t{round(row[1], 1)}\t{row[2] * 100:,.2f}%")
+
+    def show_global_time(self):
+        print("Simulation average time:", self.queue.global_time)
+
+    def show_losses(self):
+        print("Number of losses:", self.queue.losses)
      
