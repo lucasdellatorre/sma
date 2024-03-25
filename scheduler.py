@@ -6,6 +6,8 @@ class Scheduler():
         self.scheduler = []
 
     def add(self, event, interval):
+        if len(self.random_numbers) == 0:
+            return
         event.time = event.time + self.get_random(interval)
         self.scheduler.append(event)
         self.scheduler.sort(key=lambda event: event.time)
