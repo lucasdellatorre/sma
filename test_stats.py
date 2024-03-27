@@ -1,7 +1,5 @@
 from stats import Stats
 from queue_1 import Queue
-from scheduler import Scheduler
-from interval import Interval
 
 class TestStats:
     def queue(self):

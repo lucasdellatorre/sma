@@ -1,11 +1,10 @@
 from event import Event, EventType
 
 class Simulation:
-    def __init__(self, arrival, queue, scheduler, random_numbers):
+    def __init__(self, arrival, queue, scheduler):
         self.arrival = arrival
         self.queue = queue
         self.scheduler = scheduler
-        self.random_numbers = random_numbers
 
     def run(self):
         self.scheduler.add_rand(Event(EventType.ARRIVE, self.arrival), 0)

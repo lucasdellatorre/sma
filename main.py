@@ -10,7 +10,6 @@ import yaml
 
 CONFIG = {}
 
-
 def load_config(file_name):
     global CONFIG
 
@@ -34,13 +33,21 @@ def main():
     SERVICE_INTERVAL = Interval(CONFIG['minService'], CONFIG['maxService'])
 
     SEED = CONFIG['seed']
-    random_numbers = PseudoRandomNumbers(SEED).gen_rand(CONFIG['qntRandomNumbers'])
+    
 
+    random_numbers = (
+        PseudoRandomNumbers(SEED).gen_rand(CONFIG['qntRandomNumbers']) 
+        if not CONFIG.get('randomNumbers') or CONFIG.get('generateRandonNumbers') 
+        else CONFIG['randomNumbers']
+    )
+    
     SCHEDULER = Scheduler(random_numbers)
+    
+    print(random_numbers)
 
     queue = Queue(capacity=CAPACITY, servers=SERVERS, scheduler=SCHEDULER, arrival_interval=ARRIVAL_INTERVAL, service_interval=SERVICE_INTERVAL)
 
-    sim = Simulation(arrival=ARRIVAL_TIME, queue=queue, scheduler=SCHEDULER, random_numbers=random_numbers)
+    sim = Simulation(arrival=ARRIVAL_TIME, queue=queue, scheduler=SCHEDULER)
 
     sim.run()
 
