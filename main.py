@@ -14,7 +14,7 @@ service_interval = Interval(3,5)
 
 queue = Queue(capacity=capacity, servers=servers, scheduler=scheduler,arrival_interval=arrival_interval, service_interval=service_interval)
 
-sim = Simulation(arrival=arrival_time, queue=queue, scheduler=scheduler, random_numbers=random_numbers)
+sim = Simulation(arrival=arrival_time, queue=queue, scheduler=scheduler)
 
 sim.run()
 
