@@ -35,15 +35,10 @@ def main():
     SEED = CONFIG['seed']
     
 
-    random_numbers = (
-        PseudoRandomNumbers(SEED).gen_rand(CONFIG['qntRandomNumbers']) 
-        if not CONFIG.get('randomNumbers') or CONFIG.get('generateRandonNumbers') 
-        else CONFIG['randomNumbers']
-    )
+    random_numbers = PseudoRandomNumbers(SEED, CONFIG['qntRandomNumbers'], random_numbers=CONFIG.get('randomNumbers'), generate=CONFIG.get('generateRandonNumbers')) 
     
     SCHEDULER = Scheduler(random_numbers)
     
-    print(random_numbers)
 
     queue = Queue(capacity=CAPACITY, servers=SERVERS, scheduler=SCHEDULER, arrival_interval=ARRIVAL_INTERVAL, service_interval=SERVICE_INTERVAL)
 
