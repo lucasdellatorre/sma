@@ -42,8 +42,6 @@ def main():
     )
     
     SCHEDULER = Scheduler(random_numbers)
-    
-    print(random_numbers)
 
     queue = Queue(capacity=CAPACITY, servers=SERVERS, scheduler=SCHEDULER, arrival_interval=ARRIVAL_INTERVAL, service_interval=SERVICE_INTERVAL)
 
