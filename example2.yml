@@ -2,7 +2,7 @@ arrivalTime: 2
 
 capacity: 5
 
-servers: 1
+servers: 2
 
 minArrival: 2
 maxArrival: 5
