@@ -1,17 +1,23 @@
-arrivalTime: 2
-
-capacity: 5
-
-servers: 1
-
-minArrival: 2
-maxArrival: 5
-
-minService: 3
-maxService: 5
+queues:
+  q1:
+    arrivalTime: 2
+    capacity: 5
+    servers: 1
+    minArrival: 2
+    maxArrival: 5
+    minService: 3
+    maxService: 5
+  q2:
+    arrivalTime: 2
+    capacity: 5
+    servers: 1
+    minArrival: 2
+    maxArrival: 5
+    minService: 3
+    maxService: 5
 
 qntRandomNumbers: 100000
-generateRandonNumbers: True
+generateRandonNumbers: False
 
 randomNumbers:
 - 0.5
