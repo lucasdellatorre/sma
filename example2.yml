@@ -1,0 +1,22 @@
+arrivalTime: 2
+
+capacity: 5
+
+servers: 2
+
+minArrival: 2
+maxArrival: 40
+
+minService: 10
+maxService: 12
+
+qntRandomNumbers: 100000
+generateRandonNumbers: True
+
+randomNumbers:
+- 0.5
+- 0.6
+- 0.1
+- 0.3
+
+seed: 1337
