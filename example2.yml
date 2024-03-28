@@ -5,10 +5,10 @@ capacity: 5
 servers: 2
 
 minArrival: 2
-maxArrival: 40
+maxArrival: 5
 
-minService: 10
-maxService: 12
+minService: 3
+maxService: 5
 
 qntRandomNumbers: 100000
 generateRandonNumbers: True
