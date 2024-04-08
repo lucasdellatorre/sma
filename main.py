@@ -20,7 +20,6 @@ def load_config(file_name):
             print('=== ERROR LOADING YAML FILE ===')
             exit(0)
 
-
 def main():
     global CONFIG
 
@@ -41,10 +40,10 @@ def main():
 
     Q2_CAPACITY = q2_config['capacity']
     Q2_SERVERS = q2_config['servers']
-    Q2_ARRIVAL_INTERVAL = Interval(q2_config['minArrival'], q2_config['maxArrival'])
+    # Q2_ARRIVAL_INTERVAL = Interval(q2_config['minArrival'], q2_config['maxArrival'])
     Q2_SERVICE_INTERVAL = Interval(q2_config['minService'], q2_config['maxService'])
 
-    q2 = Queue(capacity=Q2_CAPACITY, servers=Q2_SERVERS, arrival_interval=Q2_ARRIVAL_INTERVAL, service_interval=Q2_SERVICE_INTERVAL)
+    q2 = Queue(capacity=Q2_CAPACITY, servers=Q2_SERVERS, arrival_interval=None, service_interval=Q2_SERVICE_INTERVAL)
 
     random_numbers = (
         PseudoRandomNumbers(SEED).gen_rand(CONFIG['qntRandomNumbers']) 
@@ -54,25 +53,11 @@ def main():
 
     SCHEDULER = Scheduler(random_numbers)
 
-    print(q1_config)
-    print(q2_config)
-
-    print(q1)
-    print(q2)
-
     sim = Simulation(arrival_time=ARRIVAL_TIME, queue1=q1, queue2=q2, scheduler=SCHEDULER)
 
     sim.run()
 
-    stats = Stats(sim)
-
-    stats.show_prob_distribution()
-
-    stats.show_losses(q1)
-    stats.show_losses(q2)
-
-    stats.show_global_time()
-
+    Stats(sim).report()
 
 if __name__ == '__main__':
     main()

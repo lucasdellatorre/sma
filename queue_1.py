@@ -23,7 +23,7 @@ class Queue:
 
     def __str__(self) -> str:
         string = f'Capacity: {self.capacity}' + '\n'
-        string = string + f'Servers: {self.capacity}' + '\n'
+        string = string + f'Servers: {self.servers}' + '\n'
         string = string + f'Arrival Interval: {self.arrival_interval}' + '\n'
         string = string + f'Service Interval: {self.service_interval}' + '\n'
         string = string + f'Status: {self.status}' + '\n'

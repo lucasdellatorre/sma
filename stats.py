@@ -12,25 +12,32 @@ class Stats:
 
         return distribution
 
-    def show_prob_distribution(self):
-        q1 = self.simulation.queue1
-        q2 = self.simulation.queue2
-        distribution1 = self.calc_prob_distribution(q1)
-        distribution2 = self.calc_prob_distribution(q2)
+    def show_prob_distribution(self, queue):
+        distribution = self.calc_prob_distribution(queue)
 
-        print("State\tTime\tProbability")
-
-        print("Queue1")
-        for row in distribution1:
-            print(f"{row[0]}\t{round(row[1], 1)}\t{row[2] * 100:,.2f}%")
-
-        print("Queue2")
-        for row in distribution2:
-            print(f"{row[0]}\t{round(row[1], 1)}\t{row[2] * 100:,.2f}%")
+        print("State\t\tTime\t\tProbability")
+        for row in distribution:
+            print(f"{row[0]}\t\t{round(row[1], 4)}\t\t{row[2] * 100:,.2f}%")
 
     def show_global_time(self):
         print("Simulation average time:", self.simulation.global_time)
 
     def show_losses(self, queue):
         print("Number of losses:", queue.losses)
+    
+    def report(self):
+        queues = [self.simulation.queue1, self.simulation.queue2]
+        for index, queue in enumerate(queues): 
+            print("***********************************************************")
+            print(f"Queue:   Q{index+1} (G/G/{queue.servers}/{queue.capacity})")
+            if queue.arrival_interval != None:
+                print(f"Arrival: {queue.arrival_interval.start} ... {queue.arrival_interval.end}")
+            print(f"Service: {queue.service_interval.start} ... {queue.service_interval.end}")
+            print("***********************************************************")
+            self.show_prob_distribution(queue)
+            self.show_losses(queue)
+
+        self.show_global_time()
+
+
      
