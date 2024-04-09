@@ -9,9 +9,8 @@ class Simulation:
         self.global_time = 0
 
     def run(self):
-        count = len(self.scheduler.random_numbers) + 1 # +1 pq tem o arrival_time
         self.scheduler.add_rand(Event(EventType.ARRIVE, self.arrival_time), 0)
-        while count > 0:
+        while len(self.scheduler.random_numbers) != 0:
             next_event = self.scheduler.schedule()
             print("-----")
             print(next_event)
