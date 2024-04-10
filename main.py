@@ -1,11 +1,11 @@
+import yaml
+from sys import argv
 from interval import Interval
 from queue_1 import Queue
 from scheduler import Scheduler
 from simulation import Simulation
 from stats import Stats
 from pseudo_random_numbers import PseudoRandomNumbers
-from sys import argv
-import yaml
 
 CONFIG = {}
 
@@ -19,39 +19,39 @@ def load_config(file_name):
             print('=== ERROR LOADING YAML FILE ===')
             exit(0)
 
+def initialize_queue(config, queue_name) -> Queue:
+    queue_config = config['queues'][queue_name]
+
+    capacity = queue_config['capacity']
+    servers = queue_config['servers']
+    service_interval = Interval(queue_config['minService'], queue_config['maxService'])
+
+    if queue_name == 'Q1':
+        arrival_interval = Interval(queue_config['minArrival'], queue_config['maxArrival'])
+    else:
+        arrival_interval = None
+
+    return Queue(capacity=capacity, servers=servers, arrival_interval=arrival_interval, service_interval=service_interval)
+
 def main():
     global CONFIG
 
     load_config(argv[1])
 
-    SEED = CONFIG['seed']
-    q1_config = CONFIG['queues']['q1']
-
-    ARRIVAL_TIME = q1_config['arrivalTime']
-    Q1_CAPACITY = q1_config['capacity']
-    Q1_SERVERS = q1_config['servers']
-    Q1_ARRIVAL_INTERVAL = Interval(q1_config['minArrival'], q1_config['maxArrival'])
-    Q1_SERVICE_INTERVAL = Interval(q1_config['minService'], q1_config['maxService'])
-
-    q1 = Queue(capacity=Q1_CAPACITY, servers=Q1_SERVERS, arrival_interval=Q1_ARRIVAL_INTERVAL, service_interval=Q1_SERVICE_INTERVAL)
-
-    q2_config = CONFIG['queues']['q2']
-
-    Q2_CAPACITY = q2_config['capacity']
-    Q2_SERVERS = q2_config['servers']
-    Q2_SERVICE_INTERVAL = Interval(q2_config['minService'], q2_config['maxService'])
-
-    q2 = Queue(capacity=Q2_CAPACITY, servers=Q2_SERVERS, arrival_interval=None, service_interval=Q2_SERVICE_INTERVAL)
+    arrival_time = CONFIG['arrivals']['Q1']
+    seeds = CONFIG['seed']
+    q1 = initialize_queue(CONFIG, 'Q1')
+    q2 = initialize_queue(CONFIG, 'Q2')
 
     random_numbers = (
-        PseudoRandomNumbers(SEED).gen_rand(CONFIG['qntRandomNumbers']) 
-        if not CONFIG.get('randomNumbers') or CONFIG.get('generateRandonNumbers') 
-        else CONFIG['randomNumbers']
+        PseudoRandomNumbers(seeds[0]).gen_rand(CONFIG['rndnumbersPerSeed'])
+        if not CONFIG.get('rndnumbers')
+        else CONFIG['rndnumbers']
     )
 
-    SCHEDULER = Scheduler(random_numbers)
+    scheduler = Scheduler(random_numbers)
 
-    sim = Simulation(arrival_time=ARRIVAL_TIME, queue1=q1, queue2=q2, scheduler=SCHEDULER)
+    sim = Simulation(arrival_time=arrival_time, queue1=q1, queue2=q2, scheduler=scheduler)
 
     sim.run()
 

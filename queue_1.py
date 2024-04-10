@@ -20,7 +20,6 @@ class Queue:
     def update_states(self, time):
         self.states[self.status] = self.states[self.status] + time 
 
-
     def __str__(self) -> str:
         string = f'Capacity: {self.capacity}' + '\n'
         string = string + f'Servers: {self.servers}' + '\n'
