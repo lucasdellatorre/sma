@@ -10,6 +10,6 @@ pip install -r requirements.txt
 ### execute an example
 
 ```python
-python main.py example/tandem.yml
+python main.py examples/tandem.yml
 ```
 
