@@ -1,0 +1,27 @@
+queues:
+  Q1:
+    arrivalTime: 1
+    capacity: 4
+    servers: 2
+    minArrival: 1
+    maxArrival: 3
+    minService: 5
+    maxService: 6
+  Q2:
+    capacity: 5
+    servers: 3
+    minArrival: 0
+    maxArrival: 0
+    minService: 3
+    maxService: 5
+
+qntRandomNumbers: 100000
+generateRandonNumbers: True 
+
+randomNumbers:
+- 0.5
+- 0.6
+- 0.1
+- 0.3
+
+seed: 1337

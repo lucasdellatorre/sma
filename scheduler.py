@@ -13,7 +13,6 @@ class Scheduler():
         self.scheduler.append(event)
         self.scheduler.sort(key=lambda event: event.time)
 
-
     def add_rand(self, event, rand_num):
         event.time = event.time + rand_num
         self.scheduler.append(event)

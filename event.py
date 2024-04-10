@@ -3,6 +3,7 @@ from enum import Enum
 class EventType(Enum):
     ARRIVE = 'arrive'
     EXIT = 'exit'
+    MOVE = 'move'
 
 class Event:
     def __init__(self, type, time) -> None:
