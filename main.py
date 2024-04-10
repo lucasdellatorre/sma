@@ -7,7 +7,6 @@ from pseudo_random_numbers import PseudoRandomNumbers
 from sys import argv
 import yaml
 
-
 CONFIG = {}
 
 def load_config(file_name):
@@ -40,7 +39,6 @@ def main():
 
     Q2_CAPACITY = q2_config['capacity']
     Q2_SERVERS = q2_config['servers']
-    # Q2_ARRIVAL_INTERVAL = Interval(q2_config['minArrival'], q2_config['maxArrival'])
     Q2_SERVICE_INTERVAL = Interval(q2_config['minService'], q2_config['maxService'])
 
     q2 = Queue(capacity=Q2_CAPACITY, servers=Q2_SERVERS, arrival_interval=None, service_interval=Q2_SERVICE_INTERVAL)

@@ -17,7 +17,8 @@ class Stats:
 
         print("State\t\tTime\t\tProbability")
         for row in distribution:
-            print(f"{row[0]}\t\t{round(row[1], 4)}\t\t{row[2] * 100:,.2f}%")
+            if row[1] != 0:
+                print(f"{row[0]}\t\t{round(row[1], 4)}\t\t{row[2] * 100:,.2f}%")
 
     def show_global_time(self):
         print("Simulation average time:", self.simulation.global_time)

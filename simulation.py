@@ -12,9 +12,6 @@ class Simulation:
         self.scheduler.add_rand(Event(EventType.ARRIVE, self.arrival_time), 0)
         while len(self.scheduler.random_numbers) != 0:
             next_event = self.scheduler.schedule()
-            print("-----")
-            print(next_event)
-            print('randomNumbers', self.scheduler.random_numbers)
 
             if (next_event.type == EventType.ARRIVE):
                 self.arrival(next_event)
@@ -22,7 +19,6 @@ class Simulation:
                 self.exit(next_event)
             elif (next_event.type == EventType.MOVE):
                 self.move(next_event)
-            count = count - 1
         
     def arrival(self, event):
         self.__update_global_time(event)
@@ -35,7 +31,6 @@ class Simulation:
         self.scheduler.add(Event(EventType.ARRIVE, self.global_time), self.queue1.arrival_interval)
 
     def exit(self, event):
-        print("exit", event)
         self.__update_global_time(event)
         self.queue2.out()
         if self.queue2.status >= self.queue2.servers:
@@ -43,7 +38,6 @@ class Simulation:
 
     def move(self, event):
         self.__update_global_time(event)
-        print("passagem", event)
         self.queue1.out()
         if self.queue1.status >= self.queue1.servers:
             self.scheduler.add(Event(EventType.MOVE, self.global_time), self.queue1.service_interval)
@@ -58,5 +52,3 @@ class Simulation:
         self.queue1.update_states(event.time - self.global_time)
         self.queue2.update_states(event.time - self.global_time)
         self.global_time = event.time
-        print(self.queue1.states)
-        print("queue2states", self.queue2.states)
