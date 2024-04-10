@@ -42,13 +42,11 @@ def main():
     seeds = CONFIG['seed']
     q1 = initialize_queue(CONFIG, 'Q1')
     q2 = initialize_queue(CONFIG, 'Q2')
-
-    random_numbers = (
-        PseudoRandomNumbers(seeds[0]).gen_rand(CONFIG['rndnumbersPerSeed'])
-        if not CONFIG.get('rndnumbers')
-        else CONFIG['rndnumbers']
-    )
-
+    total_rnd_numbers = CONFIG['rndnumbersPerSeed']
+    random_numbers = CONFIG.get('rndnumbers')
+      
+    random_numbers = PseudoRandomNumbers(seeds[0], total_rnd_numbers, random_numbers=random_numbers, generate=not bool(random_numbers))
+    
     scheduler = Scheduler(random_numbers)
 
     sim = Simulation(arrival_time=arrival_time, queue1=q1, queue2=q2, scheduler=scheduler)

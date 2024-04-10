@@ -1,12 +1,13 @@
 from event import Event
+from pseudo_random_numbers import PseudoRandomNumbers
 
 class Scheduler():
-    def __init__(self, random_numbers):
+    def __init__(self, random_numbers: PseudoRandomNumbers):
         self.random_numbers = random_numbers
         self.scheduler = []
 
     def add(self, event, interval):
-        if len(self.random_numbers) == 0:
+        if self.random_numbers.current == self.random_numbers.total_numbers:
             return
         event.time = event.time + self.get_random(interval)
         self.scheduler.append(event)
@@ -21,7 +22,7 @@ class Scheduler():
         return self.scheduler.pop(0)
     
     def get_random(self, interval) -> float:
-        rand_num = self.random_numbers.pop(0)
+        rand_num = self.random_numbers.get_next_number()
         return interval.start + (interval.end - interval.start) * rand_num
 
 

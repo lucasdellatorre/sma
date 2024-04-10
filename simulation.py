@@ -1,4 +1,6 @@
 from event import Event, EventType
+from scheduler import Scheduler
+from queue_1 import Queue
 
 class Simulation:
     def __init__(self, arrival_time, queue1, queue2, scheduler):
@@ -10,7 +12,7 @@ class Simulation:
 
     def run(self):
         self.scheduler.add_rand(Event(EventType.ARRIVE, self.arrival_time), 0)
-        while len(self.scheduler.random_numbers) != 0:
+        while self.scheduler.random_numbers.current != self.scheduler.random_numbers.total_numbers:
             next_event = self.scheduler.schedule()
 
             if (next_event.type == EventType.ARRIVE):
