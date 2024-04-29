@@ -30,11 +30,10 @@ class Queue:
         
     def target(self, prob, time):
         sum = 0
-        
         for value in self.queues_candidate:
             target = value[0]
             queue_prob = value[1]
-            sum = sum + queue_prob            
+            sum = sum + queue_prob   
             if prob <= sum:
                 return Event(EventType.MOVE, time, self, target)
         return Event(EventType.EXIT, time, self, None)

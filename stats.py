@@ -28,8 +28,12 @@ class Stats:
     
     def report(self):
         for index, queue in enumerate(self.simulation.queues): 
+            k = queue.capacity
             print("***********************************************************")
-            print(f"Queue:   Q{index+1} (G/G/{queue.servers}/{queue.capacity})")
+            if not k == 100:
+                print(f"Queue:   Q{index+1} (G/G/{queue.servers}/{queue.capacity})")
+            else:
+                print(f"Queue:   Q{index+1} (G/G/{queue.servers})")
             if queue.arrival_interval != None:
                 print(f"Arrival: {queue.arrival_interval.start} ... {queue.arrival_interval.end}")
             print(f"Service: {queue.service_interval.start} ... {queue.service_interval.end}")

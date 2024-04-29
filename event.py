@@ -13,6 +13,10 @@ class Event:
         self.target = target
 
     def __str__(self):
+        if self.source == None:
+            return f'Type:{self.type} | Time: {self.time} | Source: {self.source} | Target: {self.target.id}'
+        if self.target == None:
+            return f'Type:{self.type} | Time: {self.time} | Source: {self.source.id} | Target: {self.target}'
         return f'Type:{self.type} | Time: {self.time} | Source: {self.source} | Target: {self.target}'
 
 
