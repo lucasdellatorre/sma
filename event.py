@@ -6,12 +6,14 @@ class EventType(Enum):
     MOVE = 'move'
 
 class Event:
-    def __init__(self, type, time) -> None:
+    def __init__(self, type, time, source, target) -> None:
         self.type = type
         self.time = time
+        self.source = source
+        self.target = target
 
     def __str__(self):
-        return f'Type:{self.type} | Time: {self.time}'
+        return f'Type:{self.type} | Time: {self.time} | Source: {self.source} | Target: {self.target}'
 
 
 

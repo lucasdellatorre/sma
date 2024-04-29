@@ -1,56 +1,56 @@
 from event import Event, EventType
 from scheduler import Scheduler
 from queue_1 import Queue
+from interval import Interval
 
 class Simulation:
-    def __init__(self, arrival_time, queue1, queue2, scheduler):
+    def __init__(self, arrival_time, queues, scheduler):
         self.arrival_time = arrival_time
-        self.queue1 = queue1
-        self.queue2 = queue2
+        self.queues = queues
         self.scheduler = scheduler
         self.global_time = 0
 
     def run(self):
-        self.scheduler.add_rand(Event(EventType.ARRIVE, self.arrival_time), 0)
+        first_queue = self.queues[0]
+        self.scheduler.add_rand(Event(EventType.ARRIVE, self.arrival_time, None, first_queue), 0)
         while self.scheduler.random_numbers.current != self.scheduler.random_numbers.total_numbers:
             next_event = self.scheduler.schedule()
 
+            self.__update_global_time(next_event)
+
             if (next_event.type == EventType.ARRIVE):
-                self.arrival(next_event)
+                self.arrival(None, next_event.target)
             elif (next_event.type == EventType.EXIT):
-                self.exit(next_event)
+                self.exit(next_event.source, None)
             elif (next_event.type == EventType.MOVE):
-                self.move(next_event)
+                self.move(next_event.source, next_event.target)
         
-    def arrival(self, event):
-        self.__update_global_time(event)
-        if self.queue1.status < self.queue1.capacity:
-            self.queue1.add()
-            if self.queue1.status <= self.queue1.servers:
-                self.scheduler.add(Event(EventType.MOVE, self.global_time), self.queue1.service_interval)
+    def arrival(self, _, target: Queue):
+        if target.status < target.capacity:
+            target.add()
+            if target.status <= target.servers:
+                self.scheduler.add(target.target(self.scheduler.get_random(Interval(0, 1)), self.global_time), target.service_interval)
         else:
-            self.queue1.loss()
-        self.scheduler.add(Event(EventType.ARRIVE, self.global_time), self.queue1.arrival_interval)
+            target.loss()
+        self.scheduler.add(Event(EventType.ARRIVE, self.global_time, None, target), target.arrival_interval)
 
-    def exit(self, event):
-        self.__update_global_time(event)
-        self.queue2.out()
-        if self.queue2.status >= self.queue2.servers:
-            self.scheduler.add(Event(EventType.EXIT, self.global_time), self.queue2.service_interval)
-
-    def move(self, event):
-        self.__update_global_time(event)
-        self.queue1.out()
-        if self.queue1.status >= self.queue1.servers:
-            self.scheduler.add(Event(EventType.MOVE, self.global_time), self.queue1.service_interval)
-        if self.queue2.status < self.queue2.capacity:
-            self.queue2.add()
-            if self.queue2.status <= self.queue2.servers:
-                self.scheduler.add(Event(EventType.EXIT, self.global_time), self.queue2.service_interval)
+    def exit(self, source, _):
+        source.out()
+        if source.status >= source.servers:
+            self.scheduler.add(source.target(self.scheduler.get_random(Interval(0, 1)), self.global_time), source.service_interval)
+            
+    def move(self, source, target):
+        source.out()
+        if source.status >= source.servers:
+            self.scheduler.add(source.target(self.scheduler.get_random(Interval(0, 1)), self.global_time), source.service_interval)
+        if target.status < target.capacity:
+            target.add()
+            if target.status <= target.servers:
+                self.scheduler.add(Event(EventType.EXIT, self.global_time, target, None), target.service_interval) # check if is target or source here
         else:
-            self.queue2.loss()
+            target.loss()
 
     def __update_global_time(self, event):
-        self.queue1.update_states(event.time - self.global_time)
-        self.queue2.update_states(event.time - self.global_time)
+        for queue in self.queues:
+            queue.update_states(event.time - self.global_time)
         self.global_time = event.time

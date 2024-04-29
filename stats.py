@@ -27,8 +27,7 @@ class Stats:
         print("Number of losses:", queue.losses)
     
     def report(self):
-        queues = [self.simulation.queue1, self.simulation.queue2]
-        for index, queue in enumerate(queues): 
+        for index, queue in enumerate(self.simulation.queues): 
             print("***********************************************************")
             print(f"Queue:   Q{index+1} (G/G/{queue.servers}/{queue.capacity})")
             if queue.arrival_interval != None:
