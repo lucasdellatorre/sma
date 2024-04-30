@@ -31,7 +31,7 @@ def get_queues(config) -> list:
         if "capacity" in queue_config:
             capacity = queue_config['capacity']
         else:
-            capacity = 100
+            capacity = 100 ## preguica de fazer um jeito melhor, mas o certo seria colocar um valor -1 aqui e tratar nos outros lugares do codigo
 
         if "minArrival" in queue_config:
             arrival_interval = Interval(queue_config['minArrival'], queue_config['maxArrival'])
@@ -42,6 +42,7 @@ def get_queues(config) -> list:
     
     return queues
 
+# not used
 def get_backbone(config, queue_size) -> list:
     network = config["network"]
     backbone = [

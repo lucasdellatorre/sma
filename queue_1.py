@@ -29,12 +29,11 @@ class Queue:
         self.queues_candidate.append((queue, prob))
         
     def target(self, prob, time):
-        sum = 0
-        for value in self.queues_candidate:
-            target = value[0]
-            queue_prob = value[1]
-            sum = sum + queue_prob   
-            if prob <= sum:
+        threshold = 1e-6  # or any other suitable threshold
+        cumulative_prob = 0
+        for target, queue_prob in self.queues_candidate:
+            cumulative_prob += queue_prob
+            if prob < cumulative_prob + threshold:
                 return Event(EventType.MOVE, time, self, target)
         return Event(EventType.EXIT, time, self, None)
     

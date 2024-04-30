@@ -17,7 +17,7 @@ class Event:
             return f'Type:{self.type} | Time: {self.time} | Source: {self.source} | Target: {self.target.id}'
         if self.target == None:
             return f'Type:{self.type} | Time: {self.time} | Source: {self.source.id} | Target: {self.target}'
-        return f'Type:{self.type} | Time: {self.time} | Source: {self.source} | Target: {self.target}'
+        return f'Type:{self.type} | Time: {self.time} | Source: {self.source.id} | Target: {self.target.id}'
 
 
 

@@ -13,10 +13,8 @@ class Simulation:
     def run(self):
         first_queue = self.queues[0]
         self.scheduler.add_rand(Event(EventType.ARRIVE, self.arrival_time, None, first_queue), 0)
-        while (self.scheduler.random_numbers.current) != self.scheduler.random_numbers.total_numbers:
+        while (self.scheduler.random_numbers.current + 2) <= self.scheduler.random_numbers.total_numbers: # tem que colocar +2 pq o current comeca com -1 
             next_event = self.scheduler.schedule()
-            
-            # print(next_event)
             
             self.__update_global_time(next_event)
 
@@ -31,7 +29,8 @@ class Simulation:
         if target.status < target.capacity:
             target.add()
             if target.status <= target.servers:
-                self.scheduler.add(target.target(self.scheduler.get_random(Interval(0, 1)), self.global_time), target.service_interval)
+                event = target.target(self.scheduler.get_random(Interval(0, 1)), self.global_time)
+                self.scheduler.add(event, target.service_interval)
         else:
             target.loss()
         self.scheduler.add(Event(EventType.ARRIVE, self.global_time, None, target), target.arrival_interval)
